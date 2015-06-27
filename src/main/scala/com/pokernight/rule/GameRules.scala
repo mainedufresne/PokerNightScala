@@ -1,6 +1,7 @@
 package pokerNight.rule
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.pokernight.rule.BettingScheme
 import scala.io.Source
 
 /*
@@ -24,8 +25,11 @@ import scala.io.Source
     }
 }
  */
-case class GameRules(val name: String, val basis : String, val rounds: Int,  val playerCardRule : PlayerCardRule, val communityCardRule : Option[CommunityCardRule], val winCondition : Seq[WinCondition], val specialCardRules : Option[Seq[SpecialCardRule]]) {
+case class GameRules(val name: String, val basis : String, val rounds: Int, val betting : String,  val playerCardRule : PlayerCardRule, val communityCardRule : Option[CommunityCardRule], val winCondition : Seq[WinCondition], val specialCardRules : Option[Seq[SpecialCardRule]]) {
     
     @JsonIgnore
     val gameBasis = GameBasis.withName(basis)
+
+    @JsonIgnore
+    val bettingScheme = BettingScheme.withName(betting)
 }

@@ -2,6 +2,7 @@
     "name" : "Texas",
     "basis" : "HoldEm",
     "rounds" : 4,
+    "betting" : "Standard",
     "playerCardRule" :
     {
         "numberOfCardsPerDeal" : ["2-d", "0", "0", "0"]

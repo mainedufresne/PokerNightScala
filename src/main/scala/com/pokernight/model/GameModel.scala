@@ -1,5 +1,7 @@
 package pokerNight.model
 
+import com.pokernight.rule.BettingScheme
+
 import scala.io._
 import scala.collection.mutable.ArrayBuffer
 import pokerNight.rule._
@@ -31,7 +33,9 @@ class GameModel(deck: DeckModel, players: Array[PlayerModel], ruleFile: String) 
         //Refer to com.pokernight.rule for next card location
 
         println("gameRule.rounds i: " + _round)
-        
+
+        //Deal cards
+
         //deal cards to players
         //down cards
         for(deals <- 0 to (playerRules.getNumberToDealForRound(_round))(0) - 1)
@@ -62,7 +66,8 @@ class GameModel(deck: DeckModel, players: Array[PlayerModel], ruleFile: String) 
                 players(j).receiveCard(card)
             }
         }
-        
+
+        //Deal Community Cards
         if(communityRules != null)
         {
             var numberToDeal = communityRules.getNumberToDealForRound(_round)
@@ -86,19 +91,31 @@ class GameModel(deck: DeckModel, players: Array[PlayerModel], ruleFile: String) 
         }
         playerState = ""
         for(player <- players){playerState += player._name + " has " + player.getHandAsString + "\n"}
-        
-       
-        //Deal card
-        
+
         //Any special action?
         
-        //Prompt for bets (Rotating, Standard)
+
         
         //Showdown?
         _round = _round + 1
         
     }
-    
+
+
+    def getBettingPlayer =
+    {
+        //Prompt for bets (Rotating, Standard)
+        if(gameRules.bettingScheme.equals(BettingScheme.Rotating))
+        {
+            //TODO: Rotating Scheme
+            players(0)
+        }
+        else  //Standard betting
+        {
+            players(0)
+        }
+    }
+
     private def getBestHand(hand : Array[Card]) : Int =
     {
         var totalHand : ArrayBuffer[Card] = new ArrayBuffer[Card](7)
